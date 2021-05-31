@@ -75,7 +75,8 @@
               "browserTarget": "adastra-demo:build:production"
             },
             "development": {
-              "browserTarget": "adastra-demo:build:development"
+              "browserTarget": "adastra-demo:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

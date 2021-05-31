@@ -1,0 +1,19 @@
+<h1>My favourite music</h1>
+<form [formGroup]="searchFormGroup" (submit)="searchFromApi()">
+  <mat-form-field>
+    <mat-label>Clearable input</mat-label>
+    <button matSuffix mat-icon-button aria-label="Clear" type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+    <input matInput type="text" formControlName="searchValue" />
+  </mat-form-field>
+  <button matSuffix mat-button type="submit">Search</button>
+</form>
+
+<ng-container *ngIf="interprets$ | async as interprets">
+  <ul>
+    <ng-container *ngFor="let interpret of interprets.results">
+      <li (click)="goToDetail(interpret.artistId)">{{interpret.artistName}} – {{interpret.primaryGenreName}}</li>
+    </ng-container>
+  </ul>
+</ng-container>
