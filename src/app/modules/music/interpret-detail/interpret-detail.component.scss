@@ -1,0 +1,22 @@
+.dnd {
+  &--wrapper {
+    display: flex;
+  }
+
+  &--container {
+    flex-direction: column;
+    flex: 1 1 0;
+  }
+
+  &--list {
+    height: 100%;
+    border: 1px dotted black;
+  }
+
+  &--item {
+    display: flex;
+    height: 68px;
+    border: 1px solid red;
+    cursor: move;
+  }
+}

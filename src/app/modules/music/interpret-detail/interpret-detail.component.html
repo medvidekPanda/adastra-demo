@@ -1,10 +1,34 @@
 <ng-container *ngIf="albums$ | async as albums">
-  <ul>
-    <ng-container *ngFor="let album of albums.results">
-      <li>
-        <p>{{album.artistName}}</p>
-        <img [src]="album.artworkUrl60" />
-      </li>
-    </ng-container>
-  </ul>
+  <div class="dnd--wrapper" cdkDropListGroup>
+    <div class="dnd--container">
+      <h2>List of albums</h2>
+
+      <div
+        cdkDropList
+        [cdkDropListData]="albums"
+        (cdkDropListDropped)="drop($event)"
+        class="dnd--list"
+      >
+        <div class="dnd--item" *ngFor="let item of albums" cdkDrag>
+          <img [src]="item.artworkUrl60" />
+          <p>{{ item.artistName }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dnd--container">
+      <h2>Favourite albums</h2>
+      <div
+        cdkDropList
+        [cdkDropListData]="favourite"
+        (cdkDropListDropped)="drop($event)"
+        class="dnd--list"
+      >
+        <div class="dnd--item" *ngFor="let item of favourite" cdkDrag>
+          <img [src]="item?.artworkUrl60" />
+          <p>{{ item?.artistName }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>

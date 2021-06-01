@@ -26,7 +26,7 @@ export class FetchApiDataService {
     return this.fetchApiData(`https://itunes.apple.com/search?term=${key}&country=cz&limit=20&entity=musicArtist`);
   }
 
-  getApiItem$(key?: string) {
+  getApiItem$(key?: string): Observable<Object> {
     return this.fetchApiData(`http://localhost:4200/lookup?id=${key}&entity=album`);
   }
 }

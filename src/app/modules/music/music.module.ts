@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MusicRoutingModule } from './music-routing.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { MusicRoutingModule } from './music-routing.module';
   ],
   imports: [
     CommonModule,
+    DragDropModule,
     FormsModule,
     HttpClientModule,
     MatButtonModule,
@@ -25,6 +27,9 @@ import { MusicRoutingModule } from './music-routing.module';
     MatFormFieldModule,
     MusicRoutingModule,
     ReactiveFormsModule,
+  ],
+  exports: [
+    DragDropModule
   ],
   providers: [],
 })
