@@ -1,4 +1,11 @@
-<ng-container *ngIf="albums$ | async as albums">
+<button mat-button color="primary" (click)="goBack()">Go back</button>
+<ng-container *ngIf="interpretInfo$ | async as interpretInfo">
+  <h1>{{interpretInfo.artistName}}</h1>
+  <h2>{{interpretInfo.primaryGenreName}}</h2>
+  <h3><a [href]="interpretInfo.artistLinkUrl" target="_blank">more info</a></h3>
+</ng-container>
+<button mat-button (click)="saveFavourite()">Save favourite</button>
+<ng-container *ngIf="albumsList$ | async as albums">
   <div class="dnd--wrapper" cdkDropListGroup>
     <div class="dnd--container">
       <h2>List of albums</h2>

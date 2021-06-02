@@ -13,7 +13,17 @@
 <ng-container *ngIf="interprets$ | async as interprets">
   <ul>
     <ng-container *ngFor="let interpret of interprets.results">
-      <li (click)="goToDetail(interpret.artistId)">{{interpret.artistName}} – {{interpret.primaryGenreName}}</li>
+      <li (click)="goToDetail(interpret.artistId)">
+        {{ interpret.artistName }} – {{ interpret.primaryGenreName }}
+      </li>
     </ng-container>
   </ul>
 </ng-container>
+
+<ul>
+  <ng-container *ngFor="let interpret of favouriteInterprets">
+    <li (click)="goToDetail(interpret.artistId)">
+      {{ interpret.artistName }} {{ interpret.albums }}
+    </li>
+  </ng-container>
+</ul>

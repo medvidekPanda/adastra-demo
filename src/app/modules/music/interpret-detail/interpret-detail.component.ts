@@ -2,8 +2,9 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { FetchApiDataService } from 'src/app/services/fetch-api-data.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-interpret-detail',
@@ -11,27 +12,32 @@ import { FetchApiDataService } from 'src/app/services/fetch-api-data.service';
   styleUrls: ['./interpret-detail.component.scss']
 })
 export class InterpretDetailComponent implements OnInit {
+  private interpretId?: string;
+  favourite: { artistName: string, artworkUrl60: string }[] = [];
 
-  albums$: Observable<{ artistName: string, artworkUrl60: string }[]> = this.activatedRoute.params.pipe(
-    switchMap((value: any) => {
-      const id = value.id;
-      return this.fetchApiDataService.getApiItem$(id).pipe(
-        map((res: any) => res.results.slice(1)),
-      );
-    }),
-    tap(console.log),
+  private interpretData$ = this.activatedRoute.params.pipe(
+    take(1),
+    switchMap((value: any) => this.fetchApiDataService.getApiItem$(value.id)),
   );
 
-  favourite: { artistName: string, artworkUrl60: string }[] = [
-    // {
-    //   artistName: 'TEST',
-    //   artworkUrl60: "https://is4-ssl.mzstatic.com/image/thumb/Music114/v4/ba/99/f9/ba99f923-03a6-41cf-f55f-a762d25b2f43/source/60x60bb.jpg"
-    // }
-  ];
+  interpretInfo$ = this.interpretData$.pipe(
+    filter(Boolean),
+    map((res: any) => res.results[0]),
+    tap(res => {
+      this.interpretId = String(res.artistId);
+      this.loadSetup();
+    }),
+  );
+
+  albumsList$: Observable<{ artistName: string, artworkUrl60: string }[]> = this.interpretData$.pipe(
+    map((res: any) => res.results.slice(1)),
+    tap(console.log),
+  );
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private fetchApiDataService: FetchApiDataService,
+    private location: Location,
   ) { }
 
   ngOnInit(): void { }
@@ -45,6 +51,25 @@ export class InterpretDetailComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+  }
+
+  loadSetup() {
+    if (this.interpretId) {
+      const data = localStorage.getItem(`interpret-${this.interpretId}`);
+      data ? this.favourite = JSON.parse(`${data}`) : null;
+    }
+  }
+
+  saveFavourite() {
+    if (this.interpretId && this.favourite.length > 0) {
+      localStorage.setItem(`interpret-${this.interpretId}`, JSON.stringify(this.favourite));
+    } else if (this.interpretId && this.favourite.length === 0) {
+      localStorage.removeItem(this.interpretId);
+    }
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

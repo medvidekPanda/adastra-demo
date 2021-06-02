@@ -17,6 +17,8 @@ export class InterpretListComponent implements OnInit {
     searchValue: new FormControl(''),
   });
 
+  favouriteInterprets: any[] = [];
+
   private searchKey$ = new BehaviorSubject<string | undefined>(undefined);
 
   interprets$ = this.searchKey$.pipe(
@@ -35,7 +37,11 @@ export class InterpretListComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // console.log({ ...localStorage });
+    // console.log(Object.keys(localStorage).filter(item => item.includes('interpret-')));
+    this.favouriteList();
+  }
 
   searchFromApi() {
     const value: string | undefined = this.searchFormGroup.value.searchValue.replace(' ', '+') || undefined;
@@ -44,6 +50,28 @@ export class InterpretListComponent implements OnInit {
 
   goToDetail(id: string) {
     this.router.navigate([`../interpret-detail/${id}`], { relativeTo: this.activatedRoute });
+  }
+
+  favouriteList() {
+    const keys = Object.keys(localStorage).filter(item => item.includes('interpret-'));
+    const values = [];
+
+    for (const key of keys) {
+      const interpret = localStorage.getItem(key);
+      if (interpret) {
+        const parsedValue = JSON.parse(interpret);
+        values.push({albums: parsedValue.length, ...parsedValue[0]});
+      }
+    }
+
+    this.favouriteInterprets = values.map(interpret => {
+      return {
+        artistId: interpret.artistId,
+        artistName: interpret.artistName,
+        albums: interpret.albums,
+      }
+    });
+    console.log(this.favouriteInterprets);
   }
 
 }

@@ -29,7 +29,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ReactiveFormsModule,
   ],
   exports: [
-    DragDropModule
+    DragDropModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MusicRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [],
 })
