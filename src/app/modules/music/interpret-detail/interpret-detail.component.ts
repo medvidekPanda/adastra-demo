@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
 })
 export class InterpretDetailComponent implements OnInit {
   private interpretId?: string;
-  favourite: { artistName: string, artworkUrl60: string }[] = [];
+  favourite: { collectionName: string, artworkUrl60: string, copyright: string, releaseDate: string }[] = [];
 
   private interpretData$ = this.activatedRoute.params.pipe(
     take(1),
@@ -29,7 +29,7 @@ export class InterpretDetailComponent implements OnInit {
     }),
   );
 
-  albumsList$: Observable<{ artistName: string, artworkUrl60: string }[]> = this.interpretData$.pipe(
+  albumsList$: Observable<{ collectionName: string, artworkUrl60: string, copyright: string, releaseDate: string }[]> = this.interpretData$.pipe(
     map((res: any) => res.results.slice(1)),
     tap(console.log),
   );
@@ -60,11 +60,18 @@ export class InterpretDetailComponent implements OnInit {
     }
   }
 
-  saveFavourite() {
+  saveList() {
     if (this.interpretId && this.favourite.length > 0) {
       localStorage.setItem(`interpret-${this.interpretId}`, JSON.stringify(this.favourite));
     } else if (this.interpretId && this.favourite.length === 0) {
-      localStorage.removeItem(this.interpretId);
+      this.clearList()
+    }
+  }
+
+  clearList() {
+    if (this.interpretId && this.favourite.length > 0) {
+      this.favourite = [];
+      localStorage.removeItem(`interpret-${this.interpretId}`);
     }
   }
 

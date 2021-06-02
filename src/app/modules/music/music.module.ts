@@ -10,11 +10,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MusicRoutingModule } from './music-routing.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { InterpretListItemComponent } from './interpret-list-item/interpret-list-item.component';
+import { InterpretDetailComponent } from './interpret-detail/interpret-detail.component';
 
 
 @NgModule({
   declarations: [
-    InterpretListComponent
+    InterpretListComponent,
+    InterpretDetailComponent,
+    InterpretListItemComponent
   ],
   imports: [
     CommonModule,

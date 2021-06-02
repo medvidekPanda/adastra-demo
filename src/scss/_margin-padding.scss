@@ -1,0 +1,45 @@
+.no-margin {
+  margin: 0 !important;
+}
+
+@for $i from 1 through 5 {
+  .margin-#{$i} {
+    margin: #{(8*$i)}px !important;
+  }
+
+  .margin--left-#{$i} {
+    margin-left: #{(8*$i)}px !important;
+  }
+
+  .margin--right-#{$i} {
+    margin-right: #{(8*$i)}px !important;
+  }
+
+  .margin--top-#{$i} {
+    margin-top: #{(8*$i)}px !important;
+  }
+
+  .margin--bottom-#{$i} {
+    margin-top: #{(8*$i)}px !important;
+  }
+
+  .padding-#{$i} {
+    padding: #{(8*$i)}px !important;
+  }
+
+  .padding--left-#{$i} {
+    padding-left: #{(8*$i)}px !important;
+  }
+
+  .padding--right-#{$i} {
+    padding-right: #{(8*$i)}px !important;
+  }
+
+  .padding--top-#{$i} {
+    padding-top: #{(8*$i)}px !important;
+  }
+
+  .padding--bottom-#{$i} {
+    padding-top: #{(8*$i)}px !important;
+  }
+}

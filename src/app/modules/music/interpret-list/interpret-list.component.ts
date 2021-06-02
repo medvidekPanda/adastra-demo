@@ -38,8 +38,6 @@ export class InterpretListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // console.log({ ...localStorage });
-    // console.log(Object.keys(localStorage).filter(item => item.includes('interpret-')));
     this.favouriteList();
   }
 
@@ -71,7 +69,6 @@ export class InterpretListComponent implements OnInit {
         albums: interpret.albums,
       }
     });
-    console.log(this.favouriteInterprets);
   }
 
 }

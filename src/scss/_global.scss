@@ -1,0 +1,25 @@
+.overflow {
+  overflow: auto;
+
+  &--hidden {
+    overflow: hidden;
+  }
+
+  &--y {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &--x {
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+
+  &--hidden {
+    overflow: hidden;
+  }
+}
+
+.box-sizing {
+  box-sizing: border-box;
+}

@@ -1,41 +1,67 @@
-<button mat-button color="primary" (click)="goBack()">Go back</button>
-<ng-container *ngIf="interpretInfo$ | async as interpretInfo">
-  <h1>{{interpretInfo.artistName}}</h1>
-  <h2>{{interpretInfo.primaryGenreName}}</h2>
-  <h3><a [href]="interpretInfo.artistLinkUrl" target="_blank">more info</a></h3>
-</ng-container>
-<button mat-button (click)="saveFavourite()">Save favourite</button>
-<ng-container *ngIf="albumsList$ | async as albums">
-  <div class="dnd--wrapper" cdkDropListGroup>
-    <div class="dnd--container">
-      <h2>List of albums</h2>
+<main class="flex flex--column box-sizing overflow--hidden">
+  <header class="flex flex--align-item-center">
+    <button mat-icon-button aria-label="Go back" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div
+      class="flex flex--align-item-center margin--left-4"
+      *ngIf="interpretInfo$ | async as interpretInfo"
+    >
+      <h1 class="no-margin padding--right-3">{{ interpretInfo.artistName }}</h1>
+      <h2 class="no-margin padding--right-3">
+        {{ interpretInfo.primaryGenreName }}
+      </h2>
+      <h3 class="no-margin">
+        <a [href]="interpretInfo.artistLinkUrl" target="_blank">
+          More info
+        </a>
+      </h3>
+    </div>
+  </header>
+  <section
+    *ngIf="albumsList$ | async as albums"
+    class="flex flex--1-1-0 overflow--hidden"
+    cdkDropListGroup
+  >
+    <div class="dnd--container overflow--y">
+      <h2 class="no-margin list--header">List of albums</h2>
 
       <div
         cdkDropList
         [cdkDropListData]="albums"
         (cdkDropListDropped)="drop($event)"
-        class="dnd--list"
+        class="dnd--list flex"
       >
-        <div class="dnd--item" *ngFor="let item of albums" cdkDrag>
-          <img [src]="item.artworkUrl60" />
-          <p>{{ item.artistName }}</p>
+        <div class="dnd--item margin-1" *ngFor="let item of albums" cdkDrag>
+          <app-interpret-list-item [item]="item"></app-interpret-list-item>
         </div>
       </div>
     </div>
 
-    <div class="dnd--container">
-      <h2>Favourite albums</h2>
+    <div class="dnd--container overflow--y">
+      <span class="list--header flex flex--align-item-center">
+        <h2 class="no-margin padding--right-3">Favourite albums</h2>
+        <button mat-icon-button color="primary" (click)="saveList()">
+          <mat-icon>save</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="clearList()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </span>
       <div
         cdkDropList
         [cdkDropListData]="favourite"
         (cdkDropListDropped)="drop($event)"
-        class="dnd--list"
+        class="dnd--list flex"
       >
-        <div class="dnd--item" *ngFor="let item of favourite" cdkDrag>
-          <img [src]="item?.artworkUrl60" />
-          <p>{{ item?.artistName }}</p>
+        <div
+          class="dnd--item margin-1 flex"
+          *ngFor="let item of favourite"
+          cdkDrag
+        >
+          <app-interpret-list-item [item]="item"></app-interpret-list-item>
         </div>
       </div>
     </div>
-  </div>
-</ng-container>
+  </section>
+</main>
