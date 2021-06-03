@@ -1,9 +1,9 @@
 <main class="flex flex--column box-sizing overflow--hidden">
   <h1 class="no-margin">My favourite music list</h1>
-  <form [formGroup]="searchFormGroup" (submit)="searchFromApi()">
+  <form [formGroup]="searchFormGroup" (submit)="searchFromApi()" class="margin--top-2">
     <mat-form-field class="search-form">
       <mat-label>Search interpret by name</mat-label>
-      <button matSuffix mat-icon-button aria-label="Clear" type="button">
+      <button matSuffix mat-icon-button aria-label="Clear" type="button" (click)="clearSearch()">
         <mat-icon>close</mat-icon>
       </button>
       <button matSuffix mat-icon-button aria-label="Search" type="submit">
@@ -12,21 +12,35 @@
       <input matInput type="text" placeholder="Search..." formControlName="searchValue" />
     </mat-form-field>
   </form>
-  <div class="flex flex--1-1-0 overflow--hidden">
-    <section class="flex--1-1-0 flex--align-start list--wrapper overflow--y list--border">
-      <h2 class="list--header no-margin">Founded interprets</h2>
-      <ng-container *ngIf="interprets$ | async as interprets">
-        <ng-container *ngFor="let interpret of interprets">
-          <app-interpret-list-item [item]="interpret"></app-interpret-list-item>
-        </ng-container>
-      </ng-container>
+  <div class="flex flex--1-1-0">
+
+    <!-- This two components should be moved into one reusable component. Skipping it because of time -->
+    <section class="flex--1-1-0 flex--align-start flex flex--column overflow--hidden list--border padding--right-1">
+      <h2 class="no-margin padding--bottom-1">Founded interprets</h2>
+      <div *ngIf="interprets$ | async as interprets" class="flex flex--row flex--1-1-0 list flex--align-start overflow--y">
+        <span *ngFor="let interpret of interprets" class="list--item flex flex--column clickable" (click)="goToDetail(interpret?.artistId)">
+          <p class="no-margin font-weight--bold">{{ interpret?.artistName }}</p>
+          <p class="no-margin">{{ interpret?.primaryGenreName }}</p>
+        </span>
+      </div>
     </section>
 
-    <section class="flex--1-1-0 flex--align-start list--wrapper overflow--y">
-      <h2 class="list--header no-margin">Favourite list</h2>
-      <ng-container *ngFor="let interpret of favouriteInterprets">
-        <app-interpret-list-item [item]="interpret"></app-interpret-list-item>
-      </ng-container>
+    <section class="flex--1-1-0 flex--align-start flex flex--column overflow--y padding--left-1">
+      <span class="flex flex--align-item-center padding--left-1 padding--bottom-1">
+        <h2 class="no-margin">Favourite list</h2>
+        <button mat-icon-button color="warn" (click)="clearList()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </span>
+      <div *ngIf="favouriteInterprets" class="flex flex--row flex--1-1-0 list flex--align-start overflow--y">
+        <span *ngFor="let interpret of favouriteInterprets" class="list--item flex flex--column clickable" (click)="goToDetail(interpret?.artistId)">
+          <p class="no-margin font-weight--bold">{{ interpret?.artistName }}</p>
+          <p class="no-margin">{{ interpret?.primaryGenreName }}</p>
+          <p class="no-margin">Albums: {{ interpret?.albums }}</p>
+        </span>
+      </div>
     </section>
+    <!-- END OF COMMENT -->
+
   </div>
 </main>

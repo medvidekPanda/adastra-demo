@@ -9,11 +9,8 @@ export interface Interpret {
   artistLinkUrl?: string;
   primaryGenreName?: string;
   albums?: number;
-}
-
-export interface Album {
-  collectionName: string,
-  artworkUrl60: string,
-  releaseDate: string,
-  copyright: string,
+  collectionName?: string,
+  artworkUrl60?: string,
+  releaseDate?: string,
+  copyright?: string,
 }

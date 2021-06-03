@@ -1,4 +1,29 @@
+@use '../../../../scss/mat-override';
+
 .search-form {
   width: 50%;
   max-width: 50%;
+}
+
+.list {
+  flex-flow: row wrap;
+
+  &--item {
+    flex: 0 0 calc(50% - 24px);
+    width: calc(50% - 24px);
+    background-color: #efe5fd;
+    padding: 4px;
+    margin: 4px;
+    height: 48px;
+    justify-content: space-evenly;
+
+    &:hover {
+      background-color: #AB47BC;
+      color: #fff;
+    }
+  }
+
+  &--border {
+    border-right: 1px solid #b794f6;
+  }
 }

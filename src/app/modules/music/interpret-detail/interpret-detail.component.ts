@@ -1,5 +1,4 @@
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ActivatedRoute } from '@angular/router';
@@ -7,7 +6,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { FetchApiDataService } from '../../../services/fetch-api-data.service';
-import { Album, Interpret } from '../models/music.model';
+import { Interpret } from '../models/music.model';
 
 @Component({
   selector: 'app-interpret-detail',
@@ -16,7 +15,7 @@ import { Album, Interpret } from '../models/music.model';
 })
 export class InterpretDetailComponent {
   private interpretId?: string;
-  favourite: Album[] = [];
+  favourite: Interpret[] = [];
 
   private interpretData$ = this.activatedRoute.params.pipe(
     take(1),
@@ -34,10 +33,9 @@ export class InterpretDetailComponent {
     }),
   );
 
-  albumsList$: Observable<Album[]> = this.interpretData$.pipe(
+  albumsList$ = this.interpretData$.pipe(
     filter(res => res.length > 0),
-    map((res: Interpret[]) => res.slice(1)),
-    tap(console.log),
+    map(res => res.slice(1)),
   );
 
   constructor(
@@ -46,7 +44,7 @@ export class InterpretDetailComponent {
     private location: Location,
   ) { }
 
-  drop(event: CdkDragDrop<Album[]>) {
+  drop(event: CdkDragDrop<Interpret[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

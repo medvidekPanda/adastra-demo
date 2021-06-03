@@ -9,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { MusicRoutingModule } from './music-routing.module';
-import { InterpretListItemComponent } from './interpret-list-item/interpret-list-item.component';
 import { InterpretDetailComponent } from './interpret-detail/interpret-detail.component';
 import { InterpretListComponent } from './interpret-list/interpret-list.component';
 import { DndItemComponent } from './dnd-item/dnd-item.component';
@@ -20,7 +19,6 @@ import { DndItemComponent } from './dnd-item/dnd-item.component';
     DndItemComponent,
     InterpretListComponent,
     InterpretDetailComponent,
-    InterpretListItemComponent,
   ],
   imports: [
     CommonModule,

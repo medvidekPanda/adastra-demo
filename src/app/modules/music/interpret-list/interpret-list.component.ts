@@ -3,6 +3,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { FetchApiDataService } from '../../../services/fetch-api-data.service';
 import { Interpret } from '../models/music.model';
@@ -31,6 +32,8 @@ export class InterpretListComponent implements OnInit {
 
   constructor(
     private fetchApiDataService: FetchApiDataService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +53,7 @@ export class InterpretListComponent implements OnInit {
       const interpret = localStorage.getItem(key);
       if (interpret) {
         const parsedValue = JSON.parse(interpret);
-        values.push({albums: parsedValue.length, ...parsedValue[0]});
+        values.push({ albums: parsedValue.length, ...parsedValue[0] });
       }
     }
 
@@ -58,9 +61,24 @@ export class InterpretListComponent implements OnInit {
       return {
         artistId: interpret.artistId,
         artistName: interpret.artistName,
+        primaryGenreName: interpret.primaryGenreName,
         albums: interpret.albums,
       }
     });
+  }
+
+  clearSearch() {
+    this.searchKey$.next(undefined);
+    this.searchFormGroup.patchValue({ searchValue: undefined });
+  }
+
+  goToDetail(id?: string) {
+    this.router.navigate([`../interpret-detail/${id}`], { relativeTo: this.activatedRoute });
+  }
+
+  clearList() {
+    this.favouriteInterprets = [];
+    localStorage.clear();
   }
 
 }

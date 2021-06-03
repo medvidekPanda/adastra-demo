@@ -1,21 +1,33 @@
+@use '../../../../scss/mat-override';
+
 .dnd {
   &--container {
     flex-direction: column;
     flex: 1 1 0;
+
+    &.border {
+      border-right: 1px solid #b794f6;
+    }
   }
 
   &--list {
-    border: 1px solid #b794f6;
     flex-flow: row wrap;
     min-height: 68px;
   }
 
   &--item {
     flex: 0 0 calc(50% - 24px);
+    width: calc(50% - 24px);
     height: 60px;
     max-height: 60px;
     background-color: #efe5fd;
     padding: 4px;
+    margin: 4px;
     cursor: move;
+
+    &:hover {
+      background-color: #AB47BC;
+      color: #fff;
+    }
   }
 }

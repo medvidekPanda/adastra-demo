@@ -1,0 +1,21 @@
+$button-icon-small: 16px;
+$button-small: calc(#{$button-icon-small} * 2);
+
+.mat-icon {
+  height: $button-icon-small;
+  width: $button-icon-small;
+}
+
+.material-icons {
+  font-size: $button-icon-small;
+}
+
+.mat-icon-button {
+  width: $button-small;
+  height: $button-small;
+  line-height: $button-small;
+
+  .mat-icon {
+    line-height: $button-icon-small;
+  }
+}
