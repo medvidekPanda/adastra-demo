@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { InterpretDetailComponent } from './interpret-detail/interpret-detail.component';
 import { InterpretListComponent } from './interpret-list/interpret-list.component';
 

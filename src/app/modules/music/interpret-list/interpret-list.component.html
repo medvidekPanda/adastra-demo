@@ -16,7 +16,7 @@
     <section class="flex--1-1-0 flex--align-start list--wrapper overflow--y list--border">
       <h2 class="list--header no-margin">Founded interprets</h2>
       <ng-container *ngIf="interprets$ | async as interprets">
-        <ng-container *ngFor="let interpret of interprets.results">
+        <ng-container *ngFor="let interpret of interprets">
           <article
             class="flex flex--column list--item clickable"
             (click)="goToDetail(interpret.artistId)"

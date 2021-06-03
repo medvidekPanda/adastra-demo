@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-import { switchMap, tap } from 'rxjs/operators';
-import { FetchApiDataService } from 'src/app/services/fetch-api-data.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+
+import { FetchApiDataService } from '../../../services/fetch-api-data.service';
+import { Interpret } from '../models/music.model';
 
 @Component({
   selector: 'app-interpret-list',
@@ -13,13 +15,11 @@ import { FetchApiDataService } from 'src/app/services/fetch-api-data.service';
 })
 
 export class InterpretListComponent implements OnInit {
+  private searchKey$ = new BehaviorSubject<string | undefined>(undefined);
   searchFormGroup = new FormGroup({
     searchValue: new FormControl(''),
   });
-
-  favouriteInterprets: any[] = [];
-
-  private searchKey$ = new BehaviorSubject<string | undefined>(undefined);
+  favouriteInterprets: Interpret[] = [];
 
   interprets$ = this.searchKey$.pipe(
     switchMap(key => {
@@ -28,7 +28,6 @@ export class InterpretListComponent implements OnInit {
       }
       return of(undefined);
     }),
-    tap(console.log),
   );
 
   constructor(
@@ -42,7 +41,7 @@ export class InterpretListComponent implements OnInit {
   }
 
   searchFromApi() {
-    const value: string | undefined = this.searchFormGroup.value.searchValue.replace(' ', '+') || undefined;
+    const value: string = this.searchFormGroup.value.searchValue.replace(' ', '+');
     this.searchKey$.next(value);
   }
 
@@ -52,7 +51,7 @@ export class InterpretListComponent implements OnInit {
 
   favouriteList() {
     const keys = Object.keys(localStorage).filter(item => item.includes('interpret-'));
-    const values = [];
+    const values: Interpret[] = [];
 
     for (const key of keys) {
       const interpret = localStorage.getItem(key);

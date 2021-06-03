@@ -1,36 +1,42 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { filter, map, switchMap, take, tap } from 'rxjs/operators';
-import { FetchApiDataService } from 'src/app/services/fetch-api-data.service';
+import { Observable } from 'rxjs';
+
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { Location } from '@angular/common';
+
+import { FetchApiDataService } from '../../../services/fetch-api-data.service';
+import { Album, Interpret } from '../models/music.model';
 
 @Component({
   selector: 'app-interpret-detail',
   templateUrl: './interpret-detail.component.html',
   styleUrls: ['./interpret-detail.component.scss']
 })
-export class InterpretDetailComponent implements OnInit {
+export class InterpretDetailComponent {
   private interpretId?: string;
-  favourite: { collectionName: string, artworkUrl60: string, copyright: string, releaseDate: string }[] = [];
+  favourite: Album[] = [];
 
   private interpretData$ = this.activatedRoute.params.pipe(
     take(1),
-    switchMap((value: any) => this.fetchApiDataService.getApiItem$(value.id)),
+    switchMap(value => this.fetchApiDataService.getApiItem$(value.id)),
   );
 
   interpretInfo$ = this.interpretData$.pipe(
-    filter(Boolean),
-    map((res: any) => res.results[0]),
-    tap(res => {
-      this.interpretId = String(res.artistId);
+    filter(res => res.length > 0),
+    map((res: Interpret[]) => {
+      const interpret = res[0];
+      this.interpretId = String(interpret.artistId);
       this.loadSetup();
+
+      return interpret;
     }),
   );
 
-  albumsList$: Observable<{ collectionName: string, artworkUrl60: string, copyright: string, releaseDate: string }[]> = this.interpretData$.pipe(
-    map((res: any) => res.results.slice(1)),
+  albumsList$: Observable<Album[]> = this.interpretData$.pipe(
+    filter(res => res.length > 0),
+    map((res: Interpret[]) => res.slice(1)),
     tap(console.log),
   );
 
@@ -40,9 +46,7 @@ export class InterpretDetailComponent implements OnInit {
     private location: Location,
   ) { }
 
-  ngOnInit(): void { }
-
-  drop(event: CdkDragDrop<any>) {
+  drop(event: CdkDragDrop<Album[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
