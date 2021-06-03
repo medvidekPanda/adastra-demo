@@ -1,7 +1,6 @@
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -32,8 +31,6 @@ export class InterpretListComponent implements OnInit {
 
   constructor(
     private fetchApiDataService: FetchApiDataService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -43,10 +40,6 @@ export class InterpretListComponent implements OnInit {
   searchFromApi() {
     const value: string = this.searchFormGroup.value.searchValue.replace(' ', '+');
     this.searchKey$.next(value);
-  }
-
-  goToDetail(id: string) {
-    this.router.navigate([`../interpret-detail/${id}`], { relativeTo: this.activatedRoute });
   }
 
   favouriteList() {

@@ -33,7 +33,7 @@
         class="dnd--list flex"
       >
         <div class="dnd--item margin-1" *ngFor="let item of albums" cdkDrag>
-          <app-interpret-list-item [item]="item"></app-interpret-list-item>
+          <app-dnd-item [item]="item"></app-dnd-item>
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@
           *ngFor="let item of favourite"
           cdkDrag
         >
-          <app-interpret-list-item [item]="item"></app-interpret-list-item>
+          <app-dnd-item [item]="item"></app-dnd-item>
         </div>
       </div>
     </div>

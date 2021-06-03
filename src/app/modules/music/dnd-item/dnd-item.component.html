@@ -1,0 +1,8 @@
+<div class="flex">
+  <img [src]="item?.artworkUrl60" />
+  <span class="flex flex--column flex--justify-space-between margin--left-1">
+    <p class="no-margin">Name: {{ item?.collectionName }}</p>
+    <p class="no-margin">Release date: {{ item?.releaseDate }}</p>
+    <p class="no-margin">(C): {{ item?.copyright }}</p>
+  </span>
+</div>
