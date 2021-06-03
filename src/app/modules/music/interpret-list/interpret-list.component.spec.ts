@@ -1,14 +1,22 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { FetchApiDataService } from '../../../services/fetch-api-data.service';
 
 import { InterpretListComponent } from './interpret-list.component';
 
-describe('MusicListComponent', () => {
+describe('InterpretListComponent', () => {
   let component: InterpretListComponent;
   let fixture: ComponentFixture<InterpretListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InterpretListComponent ]
+      declarations: [ InterpretListComponent ],
+      providers: [
+        FetchApiDataService,
+        HttpClient,
+        HttpHandler,
+      ]
     })
     .compileComponents();
   });

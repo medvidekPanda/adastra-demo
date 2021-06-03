@@ -1,4 +1,8 @@
+import { of } from 'rxjs';
+
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 
 import { InterpretDetailComponent } from './interpret-detail.component';
 
@@ -8,9 +12,18 @@ describe('InterpretDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InterpretDetailComponent ]
+      declarations: [InterpretDetailComponent],
+      providers: [
+        {
+          provide: ActivatedRoute, useValue: {
+            params: of({ id: '1' }),
+          },
+        },
+        HttpClient,
+        HttpHandler,
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
